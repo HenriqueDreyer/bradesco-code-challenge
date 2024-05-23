@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.jpa.entities;
+package com.dreyer.bradescocodechallenge.infra.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Order")
+@Table(name = "ORDER")
 public class OrderEntity {
 
     @Id
@@ -22,7 +22,8 @@ public class OrderEntity {
     private Long id;
 
     private UUID cardId;
-    private String product;
-    private BigDecimal price;
 
+    private String product;
+
+    private BigDecimal price;
 }

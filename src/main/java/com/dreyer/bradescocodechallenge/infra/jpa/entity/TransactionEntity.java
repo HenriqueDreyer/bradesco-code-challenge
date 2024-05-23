@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.jpa.entities;
+package com.dreyer.bradescocodechallenge.infra.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Builder
 @Getter
@@ -20,10 +19,12 @@ import java.util.UUID;
 public class TransactionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private Long orderId;
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private OrderEntity orderEntity;
 
     private String payer;
 
