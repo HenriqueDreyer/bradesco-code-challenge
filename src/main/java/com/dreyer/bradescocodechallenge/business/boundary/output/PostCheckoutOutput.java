@@ -1,6 +1,6 @@
-package com.dreyer.bradescocodechallenge.business.output;
+package com.dreyer.bradescocodechallenge.business.boundary.output;
 
-import com.dreyer.bradescocodechallenge.business.responsemodel.PaymentMethodResponseModel;
+import com.dreyer.bradescocodechallenge.business.boundary.responsemodel.PaymentMethodResponseModel;
 import com.dreyer.bradescocodechallenge.common.ErrorResponseModel;
 
 import java.util.List;

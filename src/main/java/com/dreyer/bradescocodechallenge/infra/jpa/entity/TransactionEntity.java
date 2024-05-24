@@ -22,9 +22,7 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
+    private String transaction;
 
     private String payer;
 

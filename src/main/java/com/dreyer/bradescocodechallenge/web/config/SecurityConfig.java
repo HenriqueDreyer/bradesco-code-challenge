@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.config;
+package com.dreyer.bradescocodechallenge.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

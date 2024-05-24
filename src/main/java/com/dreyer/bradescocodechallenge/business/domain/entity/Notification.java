@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.entity;
+package com.dreyer.bradescocodechallenge.business.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

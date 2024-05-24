@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.responsemodel;
+package com.dreyer.bradescocodechallenge.business.boundary.responsemodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

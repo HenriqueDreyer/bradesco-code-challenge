@@ -1,8 +1,8 @@
 package com.dreyer.bradescocodechallenge.web.service;
 
-import com.dreyer.bradescocodechallenge.business.input.PostCheckoutInput;
-import com.dreyer.bradescocodechallenge.business.requestmodel.OrderRequestModel;
-import com.dreyer.bradescocodechallenge.web.dto.OrderDto;
+import com.dreyer.bradescocodechallenge.business.boundary.input.PostCheckoutInput;
+import com.dreyer.bradescocodechallenge.business.boundary.requestmodel.CheckoutRequestModel;
+import com.dreyer.bradescocodechallenge.web.dto.CheckoutDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +20,15 @@ public class PostCheckoutService {
         this.checkoutInput = checkoutInput;
     }
 
-    public void execute(OrderDto order) {
-        final var requestModel = OrderRequestModel.builder()
-                .cartId(UUID.randomUUID())
-                .product(order.getProduct())
-                .price(order.getPrice().setScale(2))
+    public void execute(CheckoutDto checkout) {
+        final var requestModel = CheckoutRequestModel.builder()
+                .requestId(UUID.randomUUID())
+                .keyType(checkout.getKeyType())
+                .key(checkout.getKey())
+                .payee(checkout.getPayee())
+                .city(checkout.getCity())
+                .product(checkout.getProduct())
+                .price(checkout.getPrice().setScale(2))
                 .build();
 
         checkoutInput.execute(requestModel);

@@ -1,11 +1,11 @@
-package com.dreyer.bradescocodechallenge.config;
+package com.dreyer.bradescocodechallenge.web.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "com.dreyer.bradescocodechallenge.business.usecase"
+        "com.dreyer.bradescocodechallenge.infra.notification"
 })
-public class UseCaseConfig {
+public class NotificationConfig {
 }

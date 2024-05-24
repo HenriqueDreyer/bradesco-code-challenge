@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.entity;
+package com.dreyer.bradescocodechallenge.business.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Transaction {
     private Long id;
-    private Order order;
+    private Checkout checkout;
     private String payer;
     private String payee;
     private BigDecimal value;

@@ -12,7 +12,5 @@ public class NotificationEntity {
 
     private String message;
 
-    @OneToMany
-    @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
+    private String transaction;
 }

@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.entity;
+package com.dreyer.bradescocodechallenge.business.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +12,13 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Checkout {
     private Long id;
-    private UUID cardId;
+    private UUID requestId;
+    private KeyType keyType;
+    private String key;
+    private String payee;
+    private String city;
     private String product;
     private BigDecimal price;
 }
