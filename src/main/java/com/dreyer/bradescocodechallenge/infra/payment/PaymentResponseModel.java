@@ -8,4 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 public class PaymentResponseModel {
     private String value;
+    private String url;
 }

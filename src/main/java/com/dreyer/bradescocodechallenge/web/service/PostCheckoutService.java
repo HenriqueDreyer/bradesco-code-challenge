@@ -25,7 +25,7 @@ public class PostCheckoutService {
                 .requestId(UUID.randomUUID())
                 .keyType(checkout.getKeyType())
                 .key(checkout.getKey())
-                .payee(checkout.getPayee())
+                .payer(checkout.getPayer())
                 .city(checkout.getCity())
                 .product(checkout.getProduct())
                 .price(checkout.getPrice().setScale(2))

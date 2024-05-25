@@ -6,18 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Checkout {
-    private Long id;
-    private UUID requestId;
+    private Long transactionId;
     private KeyType keyType;
     private String key;
-    private String payee;
+    private String payer;
     private String city;
     private String product;
     private BigDecimal price;

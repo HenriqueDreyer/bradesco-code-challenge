@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class CheckoutDto {
     private int keyType;
     private String key;
-    private String payee;
+    private String payer;
     private String city;
     private String product;
     private BigDecimal price;

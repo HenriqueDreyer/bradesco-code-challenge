@@ -5,11 +5,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
-    private String value;
-    private String transactionId;
+public class Order {
+    private Long id;
+    private KeyType keyType;
+    private String key;
+    private String payer;
+    private String city;
+    private String product;
+    private BigDecimal price;
 }

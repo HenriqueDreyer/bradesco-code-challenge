@@ -3,12 +3,14 @@ package com.dreyer.bradescocodechallenge.infra.payment;
 import com.dreyer.bradescocodechallenge.business.domain.entity.Checkout;
 import com.dreyer.bradescocodechallenge.business.domain.entity.Payment;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentGateway;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+@Slf4j
 @Service
 public class PaymentService implements PaymentGateway {
     private final RestClient restClient;
@@ -25,17 +27,20 @@ public class PaymentService implements PaymentGateway {
 
     @Override
     public Payment generatePayment(Checkout checkout) {
+        final var transactionId = checkout.getTransactionId().toString();
+
         final var requestBody = PaymentRequestModel.builder()
                 .keyType(checkout.getKeyType().getValue())
                 .key(checkout.getKey())
-                .payee(checkout.getPayee())
+                .payer(checkout.getPayer())
                 .city(checkout.getCity())
                 .value(checkout.getPrice())
-                .transactionId(checkout.getRequestId().toString())
                 .build();
 
+        log.info("Generating QRCode");
+
         var response = this.restClient.post()
-                .uri(geracaoPixBaseUrl + requestBody.getTransactionId())
+                .uri(geracaoPixBaseUrl + transactionId)
                 .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .retrieve()
@@ -47,6 +52,7 @@ public class PaymentService implements PaymentGateway {
 
         return Payment.builder()
                 .value(response.getBody().getValue())
+                .transactionId(response.getBody().getUrl())
                 .build();
     }
 }

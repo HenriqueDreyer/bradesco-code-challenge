@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Transaction {
     private Long id;
-    private Checkout checkout;
+    private Long orderId;
+    private TransactionStatus status;
     private String payer;
     private String payee;
     private BigDecimal value;

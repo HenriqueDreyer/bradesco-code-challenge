@@ -1,16 +1,29 @@
 package com.dreyer.bradescocodechallenge.infra.jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Entity
-@Table(name = "NOTIFICATION")
-public class NotificationEntity {
+@Table(name = "NOTIFICACAO")
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class NotificationEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
+    @Column(name = "MENSAGEM")
     private String message;
 
-    private String transaction;
+    @Column(name = "CODIGO_TRANSACAO")
+    private TransactionEntity transaction;
 }

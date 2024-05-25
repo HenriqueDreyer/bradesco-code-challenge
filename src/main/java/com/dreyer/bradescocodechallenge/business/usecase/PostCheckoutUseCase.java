@@ -1,13 +1,13 @@
 package com.dreyer.bradescocodechallenge.business.usecase;
 
-import com.dreyer.bradescocodechallenge.business.domain.entity.Checkout;
-import com.dreyer.bradescocodechallenge.business.domain.entity.KeyType;
-import com.dreyer.bradescocodechallenge.business.domain.gateway.OrderGateway;
-import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentGateway;
 import com.dreyer.bradescocodechallenge.business.boundary.input.PostCheckoutInput;
 import com.dreyer.bradescocodechallenge.business.boundary.output.PostCheckoutOutput;
 import com.dreyer.bradescocodechallenge.business.boundary.requestmodel.CheckoutRequestModel;
 import com.dreyer.bradescocodechallenge.business.boundary.responsemodel.PaymentMethodResponseModel;
+import com.dreyer.bradescocodechallenge.business.domain.entity.*;
+import com.dreyer.bradescocodechallenge.business.domain.gateway.OrderGateway;
+import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentGateway;
+import com.dreyer.bradescocodechallenge.business.domain.gateway.TransactionGateway;
 import com.dreyer.bradescocodechallenge.common.ErrorResponseModel;
 
 import javax.inject.Inject;
@@ -21,12 +21,14 @@ public class PostCheckoutUseCase implements PostCheckoutInput {
     private final PostCheckoutOutput checkoutOutput;
     private final PaymentGateway paymentGateway;
     private final OrderGateway orderGateway;
+    private final TransactionGateway transactionGateway;
 
     @Inject
-    public PostCheckoutUseCase(PostCheckoutOutput checkoutOutput, PaymentGateway paymentGateway, OrderGateway orderGateway) {
+    public PostCheckoutUseCase(PostCheckoutOutput checkoutOutput, PaymentGateway paymentGateway, OrderGateway orderGateway, TransactionGateway transactionGateway) {
         this.checkoutOutput = checkoutOutput;
         this.paymentGateway = paymentGateway;
         this.orderGateway = orderGateway;
+        this.transactionGateway = transactionGateway;
     }
 
     @Override
@@ -40,21 +42,42 @@ public class PostCheckoutUseCase implements PostCheckoutInput {
             return;
         }
 
-        var order = this.orderGateway.create(Checkout.builder()
-                .requestId(requestModel.getRequestId())
-                .keyType(KeyType.get(requestModel.getKeyType()))
-                .key(requestModel.getKey())
-                .payee(requestModel.getPayee())
-                .city(requestModel.getCity())
-                .product(requestModel.getProduct())
-                .price(requestModel.getPrice())
-                .build());
+        final var order = this.orderGateway.create(
+                Order.builder()
+                        .keyType(KeyType.get(requestModel.getKeyType()))
+                        .key(requestModel.getKey())
+                        .payer(requestModel.getPayer())
+                        .city(requestModel.getCity())
+                        .product(requestModel.getProduct())
+                        .price(requestModel.getPrice())
+                        .build()
+        );
 
-        // 2. Gerar QRCode do pagamento
-        var payment = this.paymentGateway.generatePayment(order);
+        final var transaction = this.transactionGateway.create(
+                Transaction.builder()
+                        .orderId(order.getId())
+                        .status(TransactionStatus.AGUARDANDO)
+                        .payer(requestModel.getPayer())
+                        .payee("Henrique Dreyer")
+                        .value(requestModel.getPrice())
+                        .build()
+        );
+
+        final var checkout = Checkout.builder()
+                .transactionId(transaction.getId())
+                .keyType(order.getKeyType())
+                .key(order.getKey())
+                .payer(order.getPayer())
+                .city(order.getCity())
+                .product(order.getProduct())
+                .price(order.getPrice())
+                .build();
+
+        var payment = this.paymentGateway.generatePayment(checkout);
 
         var responseModel = PaymentMethodResponseModel.builder()
                 .value(payment.getValue())
+                .transactionId(payment.getTransactionId())
                 .build();
 
         this.checkoutOutput.success(responseModel);
@@ -75,7 +98,7 @@ public class PostCheckoutUseCase implements PostCheckoutInput {
                     .build());
         }
 
-        if(Objects.isNull(requestModel.getPayee())) {
+        if(Objects.isNull(requestModel.getPayer())) {
             errors.add(ErrorResponseModel.builder()
                     .message("Pagador invalido.")
                     .build());

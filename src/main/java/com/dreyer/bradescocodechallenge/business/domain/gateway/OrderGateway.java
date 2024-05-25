@@ -1,7 +1,7 @@
 package com.dreyer.bradescocodechallenge.business.domain.gateway;
 
-import com.dreyer.bradescocodechallenge.business.domain.entity.Checkout;
+import com.dreyer.bradescocodechallenge.business.domain.entity.Order;
 
 public interface OrderGateway {
-    Checkout create(Checkout checkout);
+    Order create(Order order);
 }

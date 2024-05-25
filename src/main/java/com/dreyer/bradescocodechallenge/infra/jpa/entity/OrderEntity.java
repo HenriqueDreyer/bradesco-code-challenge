@@ -1,28 +1,42 @@
 package com.dreyer.bradescocodechallenge.infra.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "COMPRA")
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "ORDER")
-public class OrderEntity {
+public class OrderEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    private String transaction;
+    @OneToOne(mappedBy = "orderEntity")
+    private TransactionEntity transactionId;
 
+    @Column(name = "TIPO_CHAVE")
+    private int keyType;
+
+    @Column(name = "CHAVE")
+    private String userKey;
+
+    @Column(name = "PAGADOR")
+    private String payer;
+
+    @Column(name = "CIDADE")
+    private String city;
+
+    @Column(name = "NOME_PRODUTO", nullable = false)
     private String product;
 
+    @Column(name = "PRECO", nullable = false)
     private BigDecimal price;
 }

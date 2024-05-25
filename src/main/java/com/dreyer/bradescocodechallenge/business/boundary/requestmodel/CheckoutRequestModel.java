@@ -16,7 +16,7 @@ public class CheckoutRequestModel {
     private UUID requestId;
     private int keyType;
     private String key;
-    private String payee;
+    private String payer;
     private String city;
     private String product;
     private BigDecimal price;

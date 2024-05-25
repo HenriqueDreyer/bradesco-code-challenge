@@ -9,4 +9,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PaymentMethodResponseModel {
     private String value;
+    private String transactionId;
 }
