@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentResponseModel {
+public class CheckoutResponseModel {
     private String value;
     private String url;
 }

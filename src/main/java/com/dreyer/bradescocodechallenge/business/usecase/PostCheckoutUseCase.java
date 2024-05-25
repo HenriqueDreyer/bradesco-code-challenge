@@ -6,7 +6,7 @@ import com.dreyer.bradescocodechallenge.business.boundary.requestmodel.CheckoutR
 import com.dreyer.bradescocodechallenge.business.boundary.responsemodel.PaymentMethodResponseModel;
 import com.dreyer.bradescocodechallenge.business.domain.entity.*;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.OrderGateway;
-import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentGateway;
+import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentSystemGateway;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.TransactionGateway;
 import com.dreyer.bradescocodechallenge.common.ErrorResponseModel;
 
@@ -19,14 +19,14 @@ import java.util.Objects;
 @Named
 public class PostCheckoutUseCase implements PostCheckoutInput {
     private final PostCheckoutOutput checkoutOutput;
-    private final PaymentGateway paymentGateway;
+    private final PaymentSystemGateway paymentSystemGateway;
     private final OrderGateway orderGateway;
     private final TransactionGateway transactionGateway;
 
     @Inject
-    public PostCheckoutUseCase(PostCheckoutOutput checkoutOutput, PaymentGateway paymentGateway, OrderGateway orderGateway, TransactionGateway transactionGateway) {
+    public PostCheckoutUseCase(PostCheckoutOutput checkoutOutput, PaymentSystemGateway paymentSystemGateway, OrderGateway orderGateway, TransactionGateway transactionGateway) {
         this.checkoutOutput = checkoutOutput;
-        this.paymentGateway = paymentGateway;
+        this.paymentSystemGateway = paymentSystemGateway;
         this.orderGateway = orderGateway;
         this.transactionGateway = transactionGateway;
     }
@@ -73,7 +73,7 @@ public class PostCheckoutUseCase implements PostCheckoutInput {
                 .price(order.getPrice())
                 .build();
 
-        var payment = this.paymentGateway.generatePayment(checkout);
+        var payment = this.paymentSystemGateway.generatePayment(checkout);
 
         var responseModel = PaymentMethodResponseModel.builder()
                 .value(payment.getValue())

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRequestModel {
+public class CheckoutRequestModel {
     private int keyType;
     private String key;
     private String payer;
