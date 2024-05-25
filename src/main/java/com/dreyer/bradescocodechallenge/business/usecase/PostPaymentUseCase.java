@@ -2,6 +2,7 @@ package com.dreyer.bradescocodechallenge.business.usecase;
 
 import com.dreyer.bradescocodechallenge.business.boundary.input.PostPaymentInput;
 import com.dreyer.bradescocodechallenge.business.boundary.output.PostPaymentOutput;
+import com.dreyer.bradescocodechallenge.business.domain.entity.Payment;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.NotificationGateway;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.PaymentSystemGateway;
 import com.dreyer.bradescocodechallenge.business.domain.gateway.TransactionGateway;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @Named
 public class PostPaymentUseCase implements PostPaymentInput {
@@ -49,7 +51,10 @@ public class PostPaymentUseCase implements PostPaymentInput {
             return;
         }
 
-        this.paymentSystemGateway.realizePayment(transaction).
+        final CompletableFuture<Payment> paymentFuture = CompletableFuture.supplyAsync(() -> {
+            // TODO: NOTIFICACAO AQUI
+            this.paymentSystemGateway.realizePayment(transaction);
+        });
 
     }
 }

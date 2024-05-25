@@ -64,10 +64,9 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
     }
 
     @Async
-    public CompletableFuture<Payment> realizePayment(Transaction transaction) {
+    public Payment realizePayment(Transaction transaction) {
         final var requestBody = PaymentRequestModel.builder()
                 .transactionId(transaction.getId())
-                .orderId(transaction.getOrderId())
                 .value(transaction.getValue())
                 .build();
 
@@ -82,7 +81,7 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
 
         if(response.getStatusCode().isError()) {
             log.error("Error in Payment");
-            return CompletableFuture.failedFuture(new PixPaymentSystemException("Error on realizing payment"));
+            throw new PixPaymentSystemException("Error on realizing payment");
         }
 
         final var payment = Payment.builder()
@@ -92,6 +91,6 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
         log.info(String.format("Payment order %s: %s", transaction.getOrderId(),
                 payment.getStatus()));
 
-        return CompletableFuture.completedFuture(payment);
+        return payment;
     }
 }

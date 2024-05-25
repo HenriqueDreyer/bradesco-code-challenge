@@ -6,8 +6,9 @@ import com.dreyer.bradescocodechallenge.business.domain.entity.PaymentMethod;
 import com.dreyer.bradescocodechallenge.business.domain.entity.Transaction;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 public interface PaymentSystemGateway {
     PaymentMethod generatePayment(Checkout checkout);
-    CompletableFuture<Payment> realizePayment(Transaction transaction);
+    Payment realizePayment(Transaction transaction);
 }
