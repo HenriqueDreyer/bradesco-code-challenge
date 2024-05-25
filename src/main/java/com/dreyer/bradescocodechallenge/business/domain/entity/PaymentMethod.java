@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
-    private TransactionStatus status;
+public class PaymentMethod {
+    private String value;
+    private String transactionId;
 }

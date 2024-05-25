@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.domain.entity;
+package com.dreyer.bradescocodechallenge.business.boundary.requestmodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
-    private TransactionStatus status;
+public class PaymentRequestModel {
+    private String value;
+    private String transactionId;
 }
