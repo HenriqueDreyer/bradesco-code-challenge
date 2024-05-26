@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class Notification {
     private Long id;
     private String message;
+    private Long transactionId;
     private Long orderId;
 }
