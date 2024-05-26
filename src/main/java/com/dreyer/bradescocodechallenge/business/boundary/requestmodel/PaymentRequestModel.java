@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentRequestModel {
-    private String value;
-    private String transactionId;
+    private Long transactionId;
 }

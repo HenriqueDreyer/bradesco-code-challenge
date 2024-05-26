@@ -2,11 +2,11 @@ package com.dreyer.bradescocodechallenge.infra.payment;
 
 import lombok.*;
 
-@Builder
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentResponseModel {
-    private int status;
+public class CheckoutResponseBody {
+    private String value;
+    private String url;
 }

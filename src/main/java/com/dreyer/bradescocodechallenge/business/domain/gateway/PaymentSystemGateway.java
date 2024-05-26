@@ -10,5 +10,5 @@ import java.util.concurrent.Future;
 
 public interface PaymentSystemGateway {
     PaymentMethod generatePayment(Checkout checkout);
-    Payment realizePayment(Transaction transaction);
+    CompletableFuture<Payment> realizePayment(Transaction transaction);
 }

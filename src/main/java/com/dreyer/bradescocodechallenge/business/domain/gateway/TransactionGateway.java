@@ -5,4 +5,5 @@ import com.dreyer.bradescocodechallenge.business.domain.entity.Transaction;
 public interface TransactionGateway {
     Transaction create(Transaction transaction);
     Transaction findById(Long id);
+    Transaction updateStatus(Transaction transaction);
 }

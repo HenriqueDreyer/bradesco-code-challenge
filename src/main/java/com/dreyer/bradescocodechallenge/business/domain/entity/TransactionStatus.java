@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum TransactionStatus {
     NEGADO(-1),
     AGUARDANDO(0),
-    REALIZADO(1);
+    REALIZADO(1),
+    EM_ANALISE(2);
 
     private int value;
 

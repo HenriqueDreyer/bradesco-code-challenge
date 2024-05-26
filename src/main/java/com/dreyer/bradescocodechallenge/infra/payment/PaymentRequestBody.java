@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRequestModel {
+public class PaymentRequestBody {
     private Long transactionId;
     private BigDecimal value;
 }

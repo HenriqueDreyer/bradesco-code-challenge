@@ -9,15 +9,15 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
-public class ConcurrentConfig {
+public class AsyncConfig {
 
-    @Bean
-    public Executor taskExecutor() {
+    @Bean("asyncTaskExecutor")
+    public Executor asyncTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(1);
-        executor.setMaxPoolSize(1);
-        executor.setQueueCapacity(500);
-        executor.setThreadNamePrefix("BradescoCodeChallengeThread-");
+        executor.setCorePoolSize(4);
+        executor.setMaxPoolSize(4);
+        executor.setQueueCapacity(150);
+        executor.setThreadNamePrefix("AsyncTaskThread-");
         executor.initialize();
         return executor;
     }

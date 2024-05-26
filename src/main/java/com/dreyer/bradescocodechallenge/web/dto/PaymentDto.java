@@ -1,4 +1,4 @@
-package com.dreyer.bradescocodechallenge.business.domain.entity;
+package com.dreyer.bradescocodechallenge.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Payment {
+public class PaymentDto {
     private Long transactionId;
-    private Long orderId;
-    private TransactionStatus status;
 }

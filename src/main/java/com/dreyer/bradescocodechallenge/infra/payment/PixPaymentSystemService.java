@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 @Slf4j
 @Service
@@ -35,7 +34,7 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
     public PaymentMethod generatePayment(Checkout checkout) {
         final var transactionId = checkout.getTransactionId().toString();
 
-        final var requestBody = CheckoutRequestModel.builder()
+        final var requestBody = CheckoutRequestBody.builder()
                 .keyType(checkout.getKeyType().getValue())
                 .key(checkout.getKey())
                 .payer(checkout.getPayer())
@@ -43,54 +42,57 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
                 .value(checkout.getPrice())
                 .build();
 
-        log.info("Generating QRCode ...");
+        log.info("[QRCODE] Generating QRCode ...");
 
         var response = this.restClient.post()
                 .uri(geracaoPixBaseUrl + transactionId)
                 .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .toEntity(CheckoutResponseModel.class);
+                .toEntity(CheckoutResponseBody.class);
 
         if (response.getStatusCode().isError()) {
-            log.error("Error to generate QRCode Data");
+            log.error("[QRCODE] Error to generate QRCode Data");
             throw new PixPaymentSystemException("Erro ao gerar pagamento");
         }
 
+        log.info("[QRCODE] QRCode Generated");
         return PaymentMethod.builder()
                 .value(response.getBody().getValue())
                 .transactionId(response.getBody().getUrl())
                 .build();
     }
 
-    @Async
-    public Payment realizePayment(Transaction transaction) {
-        final var requestBody = PaymentRequestModel.builder()
+    @Async("asyncTaskExecutor")
+    public CompletableFuture<Payment> realizePayment(Transaction transaction) {
+        final var requestBody = PaymentRequestBody.builder()
                 .transactionId(transaction.getId())
                 .value(transaction.getValue())
                 .build();
 
-        log.info("Realizing payment ...");
+        log.info("[PAYMENT] Processando Pagamento.");
 
         final var response = this.restClient.post()
                 .uri(pagamentoBaseUrl + transaction.getId())
                 .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .toEntity(PaymentResponseModel.class);
+                .toEntity(PaymentResponseBody.class);
 
         if(response.getStatusCode().isError()) {
-            log.error("Error in Payment");
-            throw new PixPaymentSystemException("Error on realizing payment");
+            log.error("[PAYMENT] Error in Payment Server");
+            throw new PixPaymentSystemException("[PAYMENT] Error in Payment Server");
         }
 
         final var payment = Payment.builder()
+                .transactionId(transaction.getId())
                 .status(TransactionStatus.get(response.getBody().getStatus()))
                 .build();
 
-        log.info(String.format("Payment order %s: %s", transaction.getOrderId(),
-                payment.getStatus()));
+        log.info("[PAYMENT] Processo Pagamento Finalizado.");
+        log.info("[PAYMENT] Payment Transaction {}: {}", transaction.getId(),
+                payment.getStatus());
 
-        return payment;
+        return CompletableFuture.completedFuture(payment);
     }
 }
