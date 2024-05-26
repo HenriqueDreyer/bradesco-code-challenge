@@ -1,4 +1,4 @@
-# Bradesco Code Challenge
+# :bank: Bradesco Code Challenge
 ### Definição do problema
 
 _Deseja-se realizar a integração do sistema de checkout de lojas virtuais com o sistema de
@@ -37,3 +37,70 @@ tecnologia adotada (linguagem, framework, ferramentas para desenvolvimento).
 3. Descrever a implementação de uma classe do sistema que receba a requisição de
 pagamento da loja e armazene na base de dados, de acordo com a tecnologia
 escolhida.
+
+
+## Aplicação
+
+Projeto desenvolvido utilizando as tecnologias:
+
+* Spring Boot 3.2.5
+* Kafka
+* Docker
+* MySql
+* Lombok
+* Mockito
+* Wiremock
+
+A arquitetura do backend foi desenvolvida com base na `Arquitetura Hexagonal`, facilicando o desenvolvimento, os testes e o desacoplamento das classes.
+
+<img src="./Bradesco-Code-Challenge.png" alt="Diagrama">
+
+### 💻 Pré-requisitos
+
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+
+- Versão do Java `JDK 21` ou `OpenJDK 21`.
+- Versão mais recento do `Maven`.
+- Versão mais recente do `Docker`.
+
+## 🚀 Instalando Bradesco Code Challenge API
+
+Para instalar o bradesco-code-challenge-api, siga estas etapas:
+
+```
+git clone https://github.com/HenriqueDreyer/bradesco-code-challenge.git
+```
+
+Após baixar o projeto do repositório, ir no diretório em que o projeto foi baixado e executar o comando:
+
+```
+mvn clean install
+```
+
+## ☕ Usando
+
+Abra uma linha de comando (ou terminal) e navegue até a pasta onde você tem os arquivos do projeto. Podemos construir e executar o aplicativo emitindo o seguinte comando:
+
+MacOS/Linux:
+
+```
+./mvnw spring-boot:run
+```
+
+Windows:
+
+```
+mvnw spring-boot:run
+```
+
+<img src="./run-api.png" alt="Start API">
+
+As últimas linhas aqui nos dizem que o Spring começou.
+
+O servidor Apache Tomcat incorporado do Spring Boot está agindo como um servidor da web e ouvindo solicitações na porta localhost 8080.
+
+Abra seu navegador e na barra de endereço no topo digite:
+```
+http://localhost:8080/api/products/filter
+```
+Você deve obter uma boa resposta amigável como esta:
