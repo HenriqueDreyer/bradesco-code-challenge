@@ -53,8 +53,8 @@ Projeto desenvolvido utilizando as tecnologias:
 
 A arquitetura do backend foi desenvolvida com base na `Arquitetura Hexagonal`, facilicando o desenvolvimento, os testes e o desacoplamento das classes.
 
-<img src="./Bradesco-Code-Challenge.png" alt="Diagrama">
-![](https://github.com/HenriqueDreyer/bradesco-code-challenge/blob/main/Bradesco-Code-Challenge.png)
+<img src="./arquitetura.jpg" alt="Arquitetura">
+<img src="./componentes.jpg" alt="Componentes">
 
 ### 💻 Pré-requisitos
 
@@ -94,8 +94,6 @@ Windows:
 mvnw spring-boot:run
 ```
 
-<img src="./run-api.png" alt="Start API">
-
 As últimas linhas aqui nos dizem que o Spring começou.
 
 O servidor Apache Tomcat incorporado do Spring Boot está agindo como um servidor da web e ouvindo solicitações na porta localhost 8080.
@@ -105,3 +103,5 @@ Abra seu navegador e na barra de endereço no topo digite:
 http://localhost:8080/api/products/filter
 ```
 Você deve obter uma boa resposta amigável como esta:
+
+<img src="./started-api.jpg" alt="Started">
