@@ -10,24 +10,23 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
 public class PixPaymentSystemService implements PaymentSystemGateway {
-    private final RestClient restClient;
-
-    @Value("${servico.pix.cobranca}")
     private String geracaoPixBaseUrl;
-
-    @Value("${servico.pix.pagamento}")
     private String pagamentoBaseUrl;
+    private RestClient.Builder builder;
 
     @Autowired
-    public PixPaymentSystemService(RestClient.Builder restClientBuilder) {
-        this.restClient = RestClient.builder()
-                .baseUrl(geracaoPixBaseUrl)
-                .build();
+    public PixPaymentSystemService(@Value("${servico.pix.pagamento}") String geracaoPixBaseUrl,
+                                   @Value("${servico.pix.pagamento}") String pagamentoBaseUrl,
+                                   RestClient.Builder builder) {
+        this.geracaoPixBaseUrl = geracaoPixBaseUrl;
+        this.pagamentoBaseUrl = pagamentoBaseUrl;
+        this.builder = builder;
     }
 
     @Override
@@ -42,9 +41,12 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
                 .value(checkout.getPrice())
                 .build();
 
+        RestClient restClient = builder.baseUrl(geracaoPixBaseUrl)
+                .build();
+
         log.info("[QRCODE] Generating QRCode ...");
 
-        var response = this.restClient.post()
+        var response = restClient.post()
                 .uri(geracaoPixBaseUrl + transactionId)
                 .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,9 +72,12 @@ public class PixPaymentSystemService implements PaymentSystemGateway {
                 .value(transaction.getValue())
                 .build();
 
+        RestClient restClient = builder.baseUrl(pagamentoBaseUrl)
+                .build();
+
         log.info("[PAYMENT] Processando Pagamento.");
 
-        final var response = this.restClient.post()
+        final var response = restClient.post()
                 .uri(pagamentoBaseUrl + transaction.getId())
                 .body(requestBody)
                 .contentType(MediaType.APPLICATION_JSON)
