@@ -53,8 +53,8 @@ Projeto desenvolvido utilizando as tecnologias:
 
 A arquitetura do backend foi desenvolvida com base na `Arquitetura Hexagonal`, facilicando o desenvolvimento, os testes e o desacoplamento das classes.
 
-<img src="./arquitetura.jpg" alt="Arquitetura">
-<img src="./componentes.jpg" alt="Componentes">
+<img src="./arquitetura.jpg" alt="Arquitetura" />
+<img src="./componentes.jpg" alt="Componentes" />
 
 ### 💻 Pré-requisitos
 
@@ -104,4 +104,4 @@ http://localhost:8080/api/products/filter
 ```
 Você deve obter uma boa resposta amigável como esta:
 
-<img src="./started-api.jpg" alt="Started">
+<img src="./started-api.jpg" alt="Started" />
