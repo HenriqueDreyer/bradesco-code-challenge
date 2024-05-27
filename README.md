@@ -54,6 +54,7 @@ Projeto desenvolvido utilizando as tecnologias:
 A arquitetura do backend foi desenvolvida com base na `Arquitetura Hexagonal`, facilicando o desenvolvimento, os testes e o desacoplamento das classes.
 
 <img src="./Bradesco-Code-Challenge.png" alt="Diagrama">
+![](https://github.com/HenriqueDreyer/bradesco-code-challenge/blob/main/Bradesco-Code-Challenge.png)
 
 ### 💻 Pré-requisitos
 
